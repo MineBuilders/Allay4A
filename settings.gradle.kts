@@ -23,4 +23,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Allay4A"
+include(":core")
 include(":app")
