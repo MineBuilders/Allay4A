@@ -1,4 +1,4 @@
-package vip.cdms.stub.ui.theme
+package vip.cdms.allay4a.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

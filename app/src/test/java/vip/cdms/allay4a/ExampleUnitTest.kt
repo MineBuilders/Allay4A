@@ -1,4 +1,4 @@
-package vip.cdms.stub
+package vip.cdms.allay4a
 
 import org.junit.Test
 

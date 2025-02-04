@@ -1,6 +1,5 @@
-package vip.cdms.stub.ui.theme
+package vip.cdms.allay4a.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

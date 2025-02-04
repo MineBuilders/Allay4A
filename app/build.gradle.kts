@@ -5,12 +5,13 @@ plugins {
 }
 
 android {
-    namespace = "vip.cdms.stub"
-    compileSdk = 34
+    namespace = "vip.cdms.allay4a"
+    compileSdk = 35
 
     defaultConfig {
-        applicationId = "vip.cdms.stub"
+        applicationId = "vip.cdms.allay4a"
         minSdk = 27
+        //noinspection OldTargetApi
         targetSdk = 34
         versionCode = 1
         versionName = "0.0.1-alpha"
