@@ -4,6 +4,7 @@ android-gradle-plugin = "8.6.0-alpha07"
 kotlin = "2.1.0"
 
 androidx-appcompat = "1.7.0"
+androidx-core-splashscreen = "1.0.1"
 androidx-core-ktx = "1.15.0"
 androidx-activity-compose = "1.10.0"
 androidx-lifecycle-runtime-ktx = "2.8.7"
@@ -14,6 +15,7 @@ androidx-test-espresso-core = "3.6.1"
 
 [libraries]
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
+androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidx-core-splashscreen" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activity-compose" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidx-lifecycle-runtime-ktx" }
