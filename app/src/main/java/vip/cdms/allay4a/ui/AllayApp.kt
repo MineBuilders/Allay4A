@@ -1,5 +1,7 @@
 package vip.cdms.allay4a.ui
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
@@ -23,21 +25,26 @@ import vip.cdms.allay4a.ui.theme.AlwaysDarkTheme
 import vip.cdms.allay4a.ui.theme.ColorError
 import vip.cdms.allay4a.ui.theme.ColorSuccess
 
+@Suppress("AnimatedContentLabel", "AnimateAsStateLabel")
 @Composable
 fun AllayApp() {
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
 
+    var isRunningServer by remember { mutableStateOf(false) }
+
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     val pagerState = rememberPagerState(pageCount = { 5 })
     remember(pagerState.currentPage) { selectedTabIndex = pagerState.currentPage }
 
-    var showQuickMenu by remember { mutableStateOf(false) }
-    if (showQuickMenu) Dialog(onDismissRequest = { showQuickMenu = false }) {
+    var isShowQuickMenu by remember { mutableStateOf(false) }
+    if (isShowQuickMenu) Dialog(onDismissRequest = { isShowQuickMenu = false }) {
         Column {
-            val colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colors.onPrimary)
+            val colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colors.onBackground)
             OutlinedButton(
-                onClick = { },
+                onClick = {
+                    isShowQuickMenu = false
+                },
                 modifier = Modifier.fillMaxWidth(),
                 colors = colors,
             ) {
@@ -46,7 +53,10 @@ fun AllayApp() {
                 Text("Restart")
             }
             OutlinedButton(
-                onClick = { },
+                onClick = {
+                    isShowQuickMenu = false
+                    isRunningServer = false
+                },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults. outlinedButtonColors(contentColor = ColorError),
             ) {
@@ -67,19 +77,21 @@ fun AllayApp() {
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.End,
         floatingActionButton = {
+            val backgroundColor by animateColorAsState(if (!isRunningServer) ColorError else ColorSuccess)
             FloatingActionButton(
                 onClick = {
-                    showQuickMenu = true
-//                        coroutineScope.launch {
-//                            scaffoldState.snackbarHostState.showSnackbar("Snackbar")
-//                        }
+                    if (!isRunningServer) isRunningServer = true
+                    else isShowQuickMenu = true
                 },
-//                    backgroundColor = MaterialTheme.colors.primary,
-//                    contentColor = MaterialTheme.colors.onPrimary,
-                backgroundColor = ColorSuccess,
+                backgroundColor = backgroundColor,
                 contentColor = Color.White,
             ) {
-                Icon(Icons.Filled.Bolt, contentDescription = "")
+                AnimatedContent(
+                    isRunningServer,
+                ) {
+                    if (it) Icon(Icons.Filled.Bolt, contentDescription = "Server Action")
+                    else Icon(Icons.Filled.PlayArrow, contentDescription = "Run")
+                }
             }
         },
         bottomBar = {
@@ -92,7 +104,7 @@ fun AllayApp() {
                         IconButton(
                             onClick = { coroutineScope.launch { scaffoldState.drawerState.open() } }
                         ) {
-                            Icon(Icons.Filled.Menu, contentDescription = "Open Server List")
+                            Icon(Icons.Filled.Menu, contentDescription = "Server List")
                         }
                     }
                     val titles = listOf("Dashboard", "Players", "Plugins", "Performance", "Settings")
@@ -146,25 +158,15 @@ fun AllayApp() {
             }
         },
         contentWindowInsets = ScaffoldDefaults.contentWindowInsets,
-    ) {// innerPadding ->
+    ) { innerPadding ->
         HorizontalPager(state = pagerState) { page ->
             when (page) {
-                0 -> AppDashboard()
-                1 -> AppPlayers()
-                2 -> AppPlugins()
-                3 -> AppPerformance()
-                4 -> AppSettings()
+                0 -> ServerDashboard(innerPadding)
+                1 -> ServerPlayers()
+                2 -> ServerPlugins()
+                3 -> ServerPerformance()
+                4 -> ServerSettings()
             }
         }
-//        Surface(elevation = 4.dp) {
-//            LazyColumn(contentPadding = innerPadding) {
-//                items(count = 100) {
-//                    Box(
-//                        Modifier
-//                            .fillMaxWidth()
-//                            .height(50.dp))
-//                }
-//            }
-//        }
     }
 }

@@ -8,6 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun AppPerformance() {
+fun ServerPerformance() {
     Spacer(Modifier.fillMaxSize().background(Color.Yellow))
 }

@@ -8,6 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun AppPlugins() {
-    Spacer(Modifier.fillMaxSize().background(Color.Blue))
+fun ServerPlayers() {
+    Spacer(Modifier.fillMaxSize().background(Color.Green))
 }
