@@ -24,8 +24,7 @@ private val darkColors = darkColors(
 
 @Composable
 fun Allay4ATheme(
-//    darkTheme: Boolean = isSystemInDarkTheme(),
-    darkTheme: Boolean = true,
+    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
     MaterialTheme(

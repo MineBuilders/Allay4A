@@ -1,9 +1,7 @@
 package vip.cdms.allay4a.ui
 
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CornerSize
@@ -102,15 +100,13 @@ fun AllayApp() {
                     val innerShadowWidthDp = 16.dp
                     val innerShadowWidth = with(LocalDensity.current) { innerShadowWidthDp.toPx() }
                     val innerShadowColor = MaterialTheme.colors.primarySurface
-                    var showStartInnerShadow by remember { mutableStateOf(false) }
-                    var showEndInnerShadow by remember { mutableStateOf(true) }
                     ScrollableTabRow(
                         selectedTabIndex = selectedTabIndex,
                         modifier = Modifier.fillMaxSize()
                             .padding(start = 4.dp, end = /*FabSize*/56.dp + 32.dp - 2.dp)
                             .drawWithContent {
                                 drawContent()
-                                if (showStartInnerShadow) drawRect(
+                                if (selectedTabIndex != 0) drawRect(
                                     brush = Brush.horizontalGradient(
                                         colors = listOf(innerShadowColor, Color.Transparent),
                                         startX = 0f,
@@ -118,7 +114,7 @@ fun AllayApp() {
                                     ),
                                     size = size.copy(width = innerShadowWidth),
                                 )
-                                if (showEndInnerShadow) drawRect(
+                                if (selectedTabIndex != titles.size - 1) drawRect(
                                     brush = Brush.horizontalGradient(
                                         colors = listOf(Color.Transparent, innerShadowColor),
                                         startX = size.width - innerShadowWidth,
@@ -141,11 +137,7 @@ fun AllayApp() {
                                 selected = selected,
                                 onClick = {
                                     selectedTabIndex = index
-                                    showStartInnerShadow = index != 0
-                                    showEndInnerShadow = index != titles.size - 1
-                                    coroutineScope.launch {
-                                        pagerState.animateScrollToPage(index)
-                                    }
+                                    coroutineScope.launch { pagerState.animateScrollToPage(index) }
                                 }
                             )
                         }
