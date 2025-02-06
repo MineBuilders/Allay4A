@@ -2,6 +2,7 @@ package vip.cdms.allay4a.ui.components
 
 import android.content.Context
 import android.graphics.Typeface
+import android.text.Spannable
 import android.util.AttributeSet
 import android.widget.ScrollView
 import android.widget.TextView
@@ -24,6 +25,13 @@ class ConsoleView @JvmOverloads constructor(
         addView(textView)
         textView.setTextColor(AnsiPalette.getContentColor())
         setBackgroundColor(AnsiPalette.getBackgroundColor())
+    }
+
+    fun setText(text: String) = setSpannable(AnsiParser.parseAsSpannable(text))
+
+    fun setSpannable(text: Spannable) {
+        textView.text = text
+        post { fullScroll(FOCUS_DOWN) }
     }
 
     private var isFirstLine = true

@@ -19,7 +19,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
+import vip.cdms.allay4a.model.ServerViewModel
 import vip.cdms.allay4a.ui.pages.*
 import vip.cdms.allay4a.ui.theme.AlwaysDarkTheme
 import vip.cdms.allay4a.ui.theme.ColorError
@@ -27,7 +29,7 @@ import vip.cdms.allay4a.ui.theme.ColorSuccess
 
 @Suppress("AnimatedContentLabel", "AnimateAsStateLabel")
 @Composable
-fun AllayApp() {
+fun AllayApp(viewModel: ServerViewModel = viewModel()) {
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
 
@@ -159,13 +161,15 @@ fun AllayApp() {
         },
         contentWindowInsets = ScaffoldDefaults.contentWindowInsets,
     ) { innerPadding ->
-        HorizontalPager(state = pagerState) { page ->
-            when (page) {
-                0 -> ServerDashboard(innerPadding)
-                1 -> ServerPlayers()
-                2 -> ServerPlugins()
-                3 -> ServerPerformance()
-                4 -> ServerSettings()
+        Surface(elevation = 8.dp) {
+            HorizontalPager(state = pagerState) { page ->
+                when (page) {
+                    0 -> ServerDashboard(viewModel, innerPadding)
+                    1 -> ServerPlayers()
+                    2 -> ServerPlugins()
+                    3 -> ServerPerformance()
+                    4 -> ServerSettings()
+                }
             }
         }
     }

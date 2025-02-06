@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "vip.cdms.allay4a"
+    namespace = "vip.cdms.allay4a.core"
     compileSdk = 34
 
     defaultConfig {
